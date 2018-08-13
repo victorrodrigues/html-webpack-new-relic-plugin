@@ -30,7 +30,7 @@ Add the plugin to your webpack config:
 ```javascript
 plugins: [
   new HtmlWebpackPlugin(),
-  new HtmlWebpackHarddiskPlugin({
+  new HtmlWebpackNewRelicPlugin({
     license: '123456',
     applicationID: '123456'
   })
