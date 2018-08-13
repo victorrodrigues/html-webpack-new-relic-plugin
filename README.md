@@ -1,37 +1,42 @@
-# NPM Module Boilerplate
+New Relic script tag for the HTML Webpack Plugin
+========================================
 
-[![Build Status](https://travis-ci.org/flexdinesh/npm-module-boilerplate.svg?branch=master)](https://travis-ci.org/flexdinesh/npm-module-boilerplate) [![dependencies Status](https://david-dm.org/flexdinesh/npm-module-boilerplate/status.svg)](https://david-dm.org/flexdinesh/npm-module-boilerplate) [![devDependencies Status](https://david-dm.org/flexdinesh/npm-module-boilerplate/dev-status.svg)](https://david-dm.org/flexdinesh/npm-module-boilerplate?type=dev) [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
+Add new relic script tag using [html-webpack-plugin](https://github.com/ampedandwired/html-webpack-plugin).
 
-**Start developing your NPM module in seconds** ✨
+Installation
+------------
+You must be running webpack on node 8.x or higher
 
-Readymade boilerplate setup with all the best practices to kick start your npm/node module development.
+Install the plugin with yarn:
+```shell
+$ yarn -D html-webpack-new-relic-plugin
+```
 
-Happy hacking =)
+Or npm:
+```shell
+$ npm install --save-dev html-webpack-new-relic-plugin
+```
 
-# Features
+Basic Usage
+-----------
+Require the plugin in your webpack config:
 
-* **ES6/ESNext** - Write _ES6_ code and _Babel_ will transpile it to ES5 for backwards compatibility
-* **Test** - _Mocha_ with _Istanbul_ coverage
-* **Lint** - Preconfigured _ESlint_ with _Airbnb_ config
-* **CI** - _TravisCI_ configuration setup
-* **Minify** - Built code will be minified for performance
+```javascript
+var HtmlWebpackNewRelicPlugin = require('html-webpack-new-relic-plugin');
+```
 
-# Commands
-- `npm run clean` - Remove `lib/` directory
-- `npm test` - Run tests with linting and coverage results.
-- `npm test:only` - Run tests without linting or coverage.
-- `npm test:watch` - You can even re-run tests on file changes!
-- `npm test:prod` - Run tests with minified code.
-- `npm run test:examples` - Test written examples on pure JS for better understanding module usage.
-- `npm run lint` - Run ESlint with airbnb-config
-- `npm run cover` - Get coverage report for your code.
-- `npm run build` - Babel will transpile ES6 => ES5 and minify the code.
-- `npm run prepublish` - Hook for npm. Do all the checks before publishing your module.
+Add the plugin to your webpack config:
 
-# Installation
-Just clone this repo and remove `.git` folder.
+```javascript
+plugins: [
+  new HtmlWebpackPlugin(),
+  new HtmlWebpackHarddiskPlugin({
+    license: '123456',
+    applicationID: '123456'
+  })
+]  
+```
 
-
-# License
-
-MIT © Dinesh Pandiyan
+This will add the HUGE New Relic script tag to your html file without making your template file ugly. It suits best
+using with [html-webpack-template](https://github.com/jaketrent/html-webpack-template) because you actually don't need
+an template file.
