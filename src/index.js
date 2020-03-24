@@ -27,7 +27,11 @@ window.NREUM||(NREUM={}),__nr_require=function(t,e,n){function r(n){if(!e[n]){va
       HtmlWebpackPlugin.getHooks(compilation).alterAssetTagGroups.tap(
         'HtmlWebpackNewRelicPlugin',
         (data) => {
-          const newRelicScriptTag = HtmlWebpackPlugin.createHtmlTagObject('script', {}, this.newrelicstring);
+          const newRelicScriptTag = HtmlWebpackPlugin.createHtmlTagObject(
+            'script',
+            { type: 'text/javascript' },
+            this.newrelicstring,
+          );
           data.bodyTags.push(newRelicScriptTag);
         }
       );
