@@ -10,6 +10,14 @@ import HtmlWebpackNewRelicPlugin from '../src/index';
 const OUTPUT_DIR = path.join(__dirname, '../dist');
 
 describe('HtmlWebpackNewRelicPlugin', () => {
+  const testPluginOptions = {
+    accountID: '121212',
+    agentID: '343434',
+    trustKey: '565656',
+    license: '123456',
+    applicationID: '654321'
+  };
+
   beforeEach(done => {
     rimraf(OUTPUT_DIR, done);
   });
@@ -23,14 +31,14 @@ describe('HtmlWebpackNewRelicPlugin', () => {
         },
         plugins: [
           new HtmlWebpackPlugin(),
-          new HtmlWebpackNewRelicPlugin({ license: 123456, applicationID: 654321 }),
+          new HtmlWebpackNewRelicPlugin(testPluginOptions),
         ],
       },
       (err, stats) => {
         const htmlFile = path.resolve(OUTPUT_DIR, 'index.html');
         expect(err).to.be.null;
         expect(fs.existsSync(htmlFile)).to.be.true;
-        
+
 
         const file = fs.readFileSync(
           path.resolve(OUTPUT_DIR, htmlFile),
@@ -40,46 +48,38 @@ describe('HtmlWebpackNewRelicPlugin', () => {
           },
         );
 
-        expect(file).include('licenseKey');
-        expect(file).include('applicationID');
+        for (const [optionName, optionValue] of Object.entries(testPluginOptions)) {
+          // 'license' is the only option that doesn't match what is used in the script
+          const scriptOptionName = (optionName === 'license' ? 'licenseKey' : optionName);
+          expect(file).include(`${scriptOptionName}:"${optionValue}"`);
+        }
         done();
       },
     );
   });
 
   describe('when its missing configuration variables', () => {
-    it('should throw error if license is missing', done => {
-      const compiler = webpack({
-        entry: path.resolve(__dirname, 'fixtures', 'entry.js'),
-        output: {
-          path: path.resolve(__dirname, '../dist'),
-        },
-        plugins: [new HtmlWebpackPlugin()],
+    function testMissingOption(missingOptionName) {
+      it(`should throw error if ${missingOptionName} is missing`, done => {
+        const compiler = webpack({
+          entry: path.resolve(__dirname, 'fixtures', 'entry.js'),
+          output: {
+            path: path.resolve(__dirname, '../dist'),
+          },
+          plugins: [new HtmlWebpackPlugin()],
+        });
+        var optionsMissingOne = Object.assign({}, testPluginOptions)
+        delete optionsMissingOne[missingOptionName]
+        expect(() => compiler.options.plugins.push(new HtmlWebpackNewRelicPlugin(optionsMissingOne))).to.throw(
+          `${missingOptionName} argument is required`,
+        );
+
+        done();
       });
-      expect(() => compiler.options.plugins.push(new HtmlWebpackNewRelicPlugin())).to.throw(
-        'license argument is required',
-      );
+    }
 
-      done();
-    });
-
-    it('should throw error if license is present but applicationID is missing', done => {
-      const compiler = webpack({
-        entry: path.resolve(__dirname, 'fixtures', 'entry.js'),
-        output: {
-          path: path.resolve(__dirname, '../dist'),
-        },
-        plugins: [new HtmlWebpackPlugin()],
-      });
-      expect(() =>
-        compiler.options.plugins.push(
-          new HtmlWebpackNewRelicPlugin({
-            license: '123456',
-          }),
-        ),
-      ).to.throw('applicationID argument is required');
-
-      done();
+    Object.keys(testPluginOptions).forEach((key) => {
+      testMissingOption(key);
     });
   });
 });
