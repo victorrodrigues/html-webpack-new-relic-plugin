@@ -31,12 +31,20 @@ Add the plugin to your webpack config:
 plugins: [
   new HtmlWebpackPlugin(),
   new HtmlWebpackNewRelicPlugin({
+    accountID: '121212',
+    agentID: '343434',
+    trustKey: '565656',
     license: '123456',
-    applicationID: '123456'
+    applicationID: '654321'
   })
 ]  
 ```
 
-This will add the HUGE New Relic script tag to your html file without making your template file ugly. It suits best
-using with [html-webpack-template](https://github.com/jaketrent/html-webpack-template) because you actually don't need
-an template file.
+This plugin adds the script for New Relic "Pro + SPA" instrumentation. If you have "Pro" configured under Browser =>
+"Application settings", the SPA data will be collected, but dropped by New Relic during ingestion. SPA data will be
+ready to be ingested when and if you switch to "Pro + SPA" instrumentation. The plugin option values can be found at the
+bottom of the JavaScript snippet under these settings.
+
+This plugin will add the HUGE New Relic script tag to your html file without making your template file ugly. It suits
+best using with [html-webpack-template](https://github.com/jaketrent/html-webpack-template) because you actually don't
+need a template file.

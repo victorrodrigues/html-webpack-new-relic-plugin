@@ -1,6 +1,6 @@
 {
   "name": "html-webpack-new-relic-plugin",
-  "version": "2.0.0",
+  "version": "3.0.0",
   "description": "Add NewRelic script tag using HtmlWebpackPlugin",
   "main": "./lib/index.js",
   "scripts": {
