@@ -15,7 +15,8 @@ describe('HtmlWebpackNewRelicPlugin', () => {
     agentID: '343434',
     trustKey: '565656',
     license: '123456',
-    applicationID: '654321'
+    applicationID: '654321',
+    beacon: 'bam-cell.nr-data.net'
   };
 
   beforeEach(done => {
