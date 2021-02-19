@@ -38,7 +38,7 @@ window.NREUM||(NREUM={}),__nr_require=function(t,e,n){function r(n){if(!e[n]){va
             { type: 'text/javascript' },
             this.newrelicstring,
           );
-          data.bodyTags.push(newRelicScriptTag);
+          data.headTags.push(newRelicScriptTag);
         }
       );
     });

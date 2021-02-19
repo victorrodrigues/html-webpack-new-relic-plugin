@@ -23,7 +23,7 @@ describe('HtmlWebpackNewRelicPlugin', () => {
     rimraf(OUTPUT_DIR, done);
   });
 
-  it('should append new relic script to body', done => {
+  it('should append new relic script to head', done => {
     const compiler = webpack(
       {
         entry: path.resolve(__dirname, 'fixtures', 'entry.js'),
