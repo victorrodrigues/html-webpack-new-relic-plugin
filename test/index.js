@@ -14,7 +14,7 @@ describe('HtmlWebpackNewRelicPlugin', () => {
     accountID: '121212',
     agentID: '343434',
     trustKey: '565656',
-    license: '123456',
+    licenseKey: '123456',
     applicationID: '654321'
   };
 
@@ -49,9 +49,7 @@ describe('HtmlWebpackNewRelicPlugin', () => {
         );
 
         for (const [optionName, optionValue] of Object.entries(testPluginOptions)) {
-          // 'license' is the only option that doesn't match what is used in the script
-          const scriptOptionName = (optionName === 'license' ? 'licenseKey' : optionName);
-          expect(file).include(`${scriptOptionName}:"${optionValue}"`);
+          expect(file).include(`${optionName}:"${optionValue}"`);
         }
         done();
       },
