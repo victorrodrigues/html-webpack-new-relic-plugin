@@ -34,7 +34,7 @@ plugins: [
     accountID: '121212',
     agentID: '343434',
     trustKey: '565656',
-    license: '123456',
+    licenseKey: '123456',
     applicationID: '654321'
   })
 ]  
